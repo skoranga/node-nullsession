@@ -11,7 +11,7 @@ Add following dependencies in your package.json
 ```
     "express-session": "^1.9",
     "nullsession": "~0.1.0",
-}
+
 ```
 
 In index.js (or equivalent)
