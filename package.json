@@ -1,6 +1,6 @@
 {
   "name": "nullsession",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "/dev/null equivalent for connect-session",
   "main": "index.js",
   "scripts": {
