@@ -5,6 +5,13 @@ var path = require('path'),
     session = require('express-session'),
     NullStore = require('../index')(session);
 
+var emptySession = {
+    "cookie": {
+        "httpOnly": true,
+        "maxAge": null,
+        "path": "/"
+    }
+};
 
 describe('nullsession', function () {
 
@@ -22,7 +29,7 @@ describe('nullsession', function () {
     it('should get a value', function (next) {
         store.get('session_test', function (err, data) {
             assert.ok(!err, '#get() got an error');
-            assert.deepEqual({}, data);
+            assert.deepEqual(emptySession, data);
             next();
         });
     });
@@ -31,7 +38,7 @@ describe('nullsession', function () {
     it('should get a empty value for non key as well', function (next) {
         store.get('akeythatdoesntexist', function (err, data) {
             assert.ok(!err, '#get() got an error');
-            assert.deepEqual({}, data);
+            assert.deepEqual(emptySession, data);
             next();
         });
     });
