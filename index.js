@@ -1,3 +1,3 @@
 'use strict';
 
-exports = module.exports = require('./lib/nullstore');
+module.exports = require('./lib/nullstore');
