@@ -1,21 +1,23 @@
 'use strict';
 
-var path = require('path'),
-    assert = require('assert'),
-    session = require('express-session'),
-    NullStore = require('../index')(session);
+const path = require('path');
+const assert = require('assert');
+const request = require('supertest');
+const session = require('express-session');
+const NullStore = require('../index')(session);
+const serverUtil = require('./fixtures/serverUtil');
 
-var emptySession = {
-    "cookie": {
-        "httpOnly": true,
-        "maxAge": null,
-        "path": "/"
+const emptySession = {
+    cookie: {
+        httpOnly: true,
+        maxAge: null,
+        path: "/"
     }
 };
 
 describe('nullsession', function () {
 
-    var store = new NullStore();
+    const store = new NullStore();
 
     it('should set a value', function (next) {
         store.set('session_test', { cookie: { maxAge: 2000 }, name: 'foo' }, function (err, data) {
@@ -52,3 +54,19 @@ describe('nullsession', function () {
         });
     });
 });
+
+describe('no cookie nullsession on server', function () {
+
+    it('should not create a new cookie', function (done) {
+      var count = 0;
+      var server = serverUtil.createServer({}, function (req, res) {
+        req.session.num = req.session.num || ++count;
+        res.end('data');
+      });
+
+      request(server)
+      .get('/')
+      .expect(serverUtil.shouldHaveNoCookie())
+      .expect(200, 'data', done);
+    });
+  });
