@@ -9,7 +9,7 @@ Add following dependencies in your package.json
 
 ```json
     "express-session": "^1.9",
-    "nullsession": "~0.1.0",
+    "nullsession": "~0.2.0",
 
 ```
 
